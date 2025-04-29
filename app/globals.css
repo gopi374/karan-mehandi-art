@@ -2,71 +2,159 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 36 30% 97%;
-    --foreground: 20 40% 15%;
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/PlayfairDisplay-Regular.woff2") format("woff2"),
+       url("/fonts/PlayfairDisplay-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
 
-    --card: 36 30% 97%;
-    --card-foreground: 20 40% 15%;
-
-    --popover: 36 30% 97%;
-    --popover-foreground: 20 40% 15%;
-
-    --primary: 20 70% 35%;
-    --primary-foreground: 36 30% 97%;
-
-    --secondary: 120 15% 40%;
-    --secondary-foreground: 36 30% 97%;
-
-    --accent: 43 80% 50%;
-    --accent-foreground: 20 40% 15%;
-
-    --muted: 36 20% 90%;
-    --muted-foreground: 20 30% 30%;
-
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 36 30% 97%;
-
-    --border: 20 30% 85%;
-    --input: 20 30% 85%;
-    --ring: 20 70% 35%;
-
-    --radius: 0.5rem;
+/* Mobile-specific styles for the menubar */
+@media (max-width: 767px) {
+  .menubar-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: hsl(var(--background));
+    z-index: 50;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
   }
 
-  .dark {
-    --background: 20 40% 10%;
-    --foreground: 36 30% 90%;
+  .menubar-mobile .menubar-trigger {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: left;
+    color: hsl(var(--foreground));
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
 
-    --card: 20 40% 12%;
-    --card-foreground: 36 30% 90%;
+  .menubar-mobile .menubar-trigger:hover {
+    background-color: hsl(var(--muted));
+  }
 
-    --popover: 20 40% 12%;
-    --popover-foreground: 36 30% 90%;
+  .menubar-mobile .menubar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+  }
 
-    --primary: 20 70% 45%;
-    --primary-foreground: 36 30% 97%;
-
-    --secondary: 120 15% 30%;
-    --secondary-foreground: 36 30% 97%;
-
-    --accent: 43 80% 40%;
-    --accent-foreground: 20 40% 10%;
-
-    --muted: 20 30% 20%;
-    --muted-foreground: 36 20% 70%;
-
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 36 30% 90%;
-
-    --border: 20 30% 25%;
-    --input: 20 30% 25%;
-    --ring: 20 70% 45%;
+  .menubar-mobile.hidden {
+    transform: translateY(-100%);
   }
 }
 
+/* Desktop and larger screens */
+@media (min-width: 768px) {
+  .menubar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    height: auto;
+  }
+
+  .menubar-trigger {
+    padding: 0.75rem 1.5rem;
+    color: hsl(var(--foreground));
+    transition: background-color 0.2s;
+  }
+
+  .menubar-trigger:hover {
+    background-color: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+  }
+}
+
+/* Base layer with custom variables */
 @layer base {
+  :root {
+    /* Background & Foreground */
+    --background: 30 15% 98%;         /* Clean cream-white background */
+    --foreground: 20 40% 12%;         /* Deep brown for main text */
+
+    /* Cards & Popovers */
+    --card: 35 10% 92%;               /* Warm off-white card background */
+    --card-foreground: 20 40% 12%;    /* Consistent dark text over cards */
+
+    --popover: 35 10% 92%;            /* Same as card for visual harmony */
+    --popover-foreground: 20 40% 12%;
+
+    /* Primary Action Colors - Rust Orange */
+    --primary: 357 70% 45%;            /* Rich rust orange (based on #B84B3A) */
+    --primary-foreground: 30 10% 97%; /* Bright white for contrast on buttons */
+
+    /* Secondary UI Elements - Olive Gold */
+    --secondary: 43 50% 50%;          /* Warm olive gold (based on #A98F5C) */
+    --secondary-foreground: 30 10% 97%;
+
+    /* Accent / Highlights - Glowing Rust */
+    --accent: 20 65% 50%;             /* Slightly lighter rust than primary */
+    --accent-foreground: 20 40% 10%;  /* Dark brown if needed for contrast */
+
+    /* Muted Elements - Dusty Taupe */
+    --muted: 30 10% 85%;              /* Soft muted background */
+    --muted-foreground: 20 30% 35%;   /* Warm gray-brown for subtext */
+
+    /* Destructive / Error - Terracotta Red */
+    --destructive: 0 65% 55%;         /* Strong red-orange for alerts */
+    --destructive-foreground: 30 10% 97%;
+
+    /* Borders & Inputs */
+    --border: 20 20% 75%;             /* Warm taupe border */
+    --input: 20 20% 75%;              /* Same as border for consistency */
+    --ring: 20 70% 45%;               /* Match primary for focus ring */
+
+    /* Radius */
+    --radius: 0.5rem;
+  }
+
+
+  .dark {
+    /* Background & Foreground */
+    --background: 20 15% 10%;         /* Deep charcoal base */
+    --foreground: 30 10% 90%;         /* Soft off-white for text */
+  
+    /* Cards & Popovers */
+    --card: 25 10% 18%;               /* Rich, neutral surface */
+    --card-foreground: 30 10% 90%;    /* Clean text over card */
+  
+    --popover: 25 10% 18%;            /* Same as card for consistency */
+    --popover-foreground: 30 10% 90%;
+  
+    /* Primary Action Colors - Rust Orange */
+    --primary: 352 70% 45%;            /* Deep rust orange (based on #CB6E5A) */
+    --primary-foreground: 30 10% 97%; /* Bright white for contrast on buttons */
+  
+    /* Secondary UI Elements - Olive Gold */
+    --secondary: 43 50% 40%;          /* Warm olive gold (based on #C0A576) */
+    --secondary-foreground: 30 10% 97%;
+  
+    /* Accent / Highlights - Glowing Rust */
+    --accent: 0 91% 67%;             /* Slightly lighter rust than primary */
+    --accent-foreground: 135 21% 4%;  /* Dark brown for contrast if needed */
+  
+    /* Muted Elements - Charcoal Taupe */
+    --muted: 25 10% 22%;              /* Subtle background for muted sections */
+    --muted-foreground: 30 10% 65%;   /* Dusty light brown for subtext */
+  
+    /* Destructive / Error - Burnt Brick */
+    --destructive: 0 60% 55%;         /* Strong red, not too harsh */
+    --destructive-foreground: 30 10% 95%;
+  
+    /* Borders & Inputs */
+    --border: 25 10% 25%;             /* Neutral taupe border */
+    --input: 25 10% 25%;              /* Same as border for consistency */
+    --ring: 20 65% 50%;               /* Accent-colored focus ring */
+  }
+
   * {
     @apply border-border;
   }
@@ -75,6 +163,7 @@
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50C55 45 60 40 65 45C70 50 75 55 70 60C65 65 60 70 55 65C50 60 45 55 50 50Z' fill='%23a87c5d' fill-opacity='0.05'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 200px;
+    font-family: "Playfair Display", serif;
   }
   h1,
   h2,
@@ -89,6 +178,7 @@
   }
 }
 
+/* Components layer */
 @layer components {
   .container-custom {
     @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
@@ -133,4 +223,3 @@
     @apply scale-110;
   }
 }
-

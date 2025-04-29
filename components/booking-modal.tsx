@@ -29,9 +29,9 @@ export default function BookingModal({ trigger }: { trigger?: React.ReactNode })
         )}
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] w-full px-4 py-6 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Book an Appointment</DialogTitle>
+          <DialogTitle className="text-center text-lg font-bold">Book an Appointment</DialogTitle>
         </DialogHeader>
         
         {/* Show success message after submission */}
@@ -44,19 +44,19 @@ export default function BookingModal({ trigger }: { trigger?: React.ReactNode })
           <form onSubmit={handleSubmit} className="space-y-6" action="https://formspree.io/f/myzedgpj" method="POST">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input id="name" name="name" required />
+              <Input id="name" name="name" required className="w-full" />
               <ValidationError prefix="Name" field="name" errors={state.errors} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" name="email" required />
+              <Input id="email" type="email" name="email" required className="w-full" />
               <ValidationError prefix="Email" field="email" errors={state.errors} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
-              <Input id="phone" name="phone" required />
+              <Input id="phone" name="phone" required className="w-full" />
               <ValidationError prefix="Phone" field="phone" errors={state.errors} />
             </div>
 
@@ -68,6 +68,7 @@ export default function BookingModal({ trigger }: { trigger?: React.ReactNode })
                 type="date" 
                 required 
                 min={new Date().toISOString().split('T')[0]}
+                className="w-full"
               />
               <ValidationError prefix="Date" field="date" errors={state.errors} />
             </div>
@@ -95,7 +96,7 @@ export default function BookingModal({ trigger }: { trigger?: React.ReactNode })
                 id="message"
                 name="message"
                 placeholder="Tell us about your requirements..."
-                className="min-h-[100px]"
+                className="min-h-[100px] w-full"
               />
               <ValidationError prefix="Message" field="message" errors={state.errors} />
             </div>

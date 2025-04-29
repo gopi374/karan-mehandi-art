@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Phone, Mail, Facebook, Instagram, Linkedin, Twitter, ArrowUp } from "lucide-react"
+import { Phone, Mail, Facebook, Instagram, Linkedin, Twitter, Youtube, ArrowUp } from "lucide-react"
 
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -31,7 +31,7 @@ const Footer = () => {
           <div>
             <Link href="/" className="inline-block mb-4">
               <div className="relative">
-                <span className="text-2xl font-bold">Karan Mehndi Art</span>
+                <span className="text-2xl color-black font-bold">Karan Mehndi Art</span>
                 <span className="block text-xs font-cursive">Timeless Henna, Crafted with Love</span>
               </div>
             </Link>
@@ -53,6 +53,13 @@ const Footer = () => {
                 className="text-primary-foreground hover:text-accent transition-colors"
               >
                 <Instagram size={18} />
+              </a>
+              <a
+                href="https://youtube.com"
+                aria-label="Youtube"
+                className="text-primary-foreground hover:text-accent transition-colors"
+              >
+                <Youtube size={18} />
               </a>
               <a
                 href="https://linkedin.com"

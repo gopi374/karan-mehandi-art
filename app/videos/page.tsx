@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -38,8 +38,7 @@ const videoItems = [
     thumbnail: "/71.jpeg?height=600&width=800",
     title: "Destination Wedding in Udaipur",
     category: "behind-the-scenes",
-    description:
-      "Follow us to a royal destination wedding in Udaipur where we created mehendi for the entire bridal party.",
+    description: "Follow us to a royal destination wedding in Udaipur where we created mehendi for the entire bridal party.",
     videoId: "Bmku0w5zbV4",
   },
   {
@@ -55,8 +54,7 @@ const videoItems = [
     thumbnail: "/64.jpg?height=600&width=800",
     title: "Mehendi Workshop Highlights",
     category: "behind-the-scenes",
-    description:
-      "Highlights from our recent mehendi workshop where we taught enthusiasts the art of henna application.",
+    description: "Highlights from our recent mehendi workshop where we taught enthusiasts the art of henna application.",
     videoId: "lu1lyfWwXv4",
   },
 ]
@@ -71,17 +69,22 @@ export default function VideosPage() {
 
   const filteredVideos = filter === "all" ? videoItems : videoItems.filter((item) => item.category === filter)
 
+  useEffect(() => {
+    document.body.style.overflow = activeVideo ? "hidden" : "auto"
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [activeVideo])
+
   return (
     <>
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-16">
-        <div className="container-custom">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Videos</h1>
-            <p className="text-xl max-w-2xl mx-auto">
-              Watch tutorials, behind-the-scenes footage, and more from Karan Mehndi Art.
-            </p>
-          </div>
+        <div className="container-custom text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Videos</h1>
+          <p className="text-xl max-w-2xl mx-auto">
+            Watch tutorials, behind-the-scenes footage, and more from Karan Mehndi Art.
+          </p>
         </div>
       </section>
 
@@ -90,27 +93,16 @@ export default function VideosPage() {
         <div className="container-custom">
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <Button
-              variant={filter === "all" ? "default" : "outline"}
-              onClick={() => setFilter("all")}
-              className={filter === "all" ? "bg-primary text-primary-foreground" : ""}
-            >
-              All Videos
-            </Button>
-            <Button
-              variant={filter === "tutorial" ? "default" : "outline"}
-              onClick={() => setFilter("tutorial")}
-              className={filter === "tutorial" ? "bg-primary text-primary-foreground" : ""}
-            >
-              Tutorials
-            </Button>
-            <Button
-              variant={filter === "behind-the-scenes" ? "default" : "outline"}
-              onClick={() => setFilter("behind-the-scenes")}
-              className={filter === "behind-the-scenes" ? "bg-primary text-primary-foreground" : ""}
-            >
-              Behind the Scenes
-            </Button>
+            {["all", "tutorial", "behind-the-scenes"].map((cat) => (
+              <Button
+                key={cat}
+                variant={filter === cat ? "default" : "outline"}
+                onClick={() => setFilter(cat)}
+                className={filter === cat ? "bg-primary text-primary-foreground" : ""}
+              >
+                {cat === "all" ? "All Videos" : cat.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+              </Button>
+            ))}
           </div>
 
           {/* Videos Grid */}
@@ -136,7 +128,9 @@ export default function VideosPage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-1">{video.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-3 capitalize">{video.category.replace("-", " ")}</p>
+                  <p className="text-sm text-muted-foreground mb-3 capitalize">
+                    {video.category.replace("-", " ")}
+                  </p>
                   <p className="text-sm line-clamp-2">{video.description}</p>
                   <Button
                     variant="link"
@@ -168,33 +162,36 @@ export default function VideosPage() {
 
       {/* Video Modal */}
       {activeVideo && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="relative bg-card max-w-4xl w-full rounded-lg overflow-hidden">
-            <button
-              className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full z-10"
-              onClick={() => setActiveVideo(null)}
-              aria-label="Close video"
-            >
-              <X size={24} />
-            </button>
+  <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div className="relative w-full max-w-3xl bg-card rounded-lg overflow-hidden shadow-lg">
+      <button
+        className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full z-10"
+        onClick={() => setActiveVideo(null)}
+        aria-label="Close video"
+      >
+        <X size={24} />
+      </button>
 
-            <div className="relative pt-[56.25%]">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1`}
-                title={activeVideo.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+      {/* Video Container - Responsive */}
+      <div className="relative w-full h-0" style={{ paddingBottom: "56.25%" }}>
+        <iframe
+          className="absolute top-0 left-0 w-full h-full rounded-t-lg"
+          src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1`}
+          title={activeVideo.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
 
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">{activeVideo.title}</h3>
-              <p className="text-muted-foreground">{activeVideo.description}</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Title and Description */}
+      <div className="p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-bold mb-2">{activeVideo.title}</h3>
+        <p className="text-sm sm:text-base text-muted-foreground">{activeVideo.description}</p>
+      </div>
+    </div>
+  </div>
+)}
+
 
       {/* Subscribe Section */}
       <section className="py-16 bg-muted">
@@ -241,4 +238,3 @@ export default function VideosPage() {
     </>
   )
 }
-

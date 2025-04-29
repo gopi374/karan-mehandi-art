@@ -45,20 +45,20 @@ const designs = [
   {
     id: 7,
     image: "/38.jpg?height=600&width=800",
-    title: "Festive Special",
-    category: "Festive",
+    title: "Occassional Special",
+    category: "Occasion",
   },
   {
     id: 8,
     image: "/50.jpg?height=600&width=800",
-    title: "Festive Special",
-    category: "Festive",
+    title: "floral Special",
+    category: "Floral",
   },
   {
     id: 9,
     image: "/34.jpg?height=600&width=800",
-    title: "Festive Special",
-    category: "Festive",
+    title: "Wedding Special",
+    category: "Wedding",
   },
 ]
 

@@ -5,36 +5,44 @@ import { Button } from "@/components/ui/button"
 import BookingModal from "@/components/booking-modal"
 import FeaturedDesignsCarousel from "@/components/featured-designs-carousel"
 import HeroSlider from "@/components/hero-slider"
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export default function Home() {
   return (
-    <>
+    <main className={`${playfair.className} flex-1 overflow-hidden`}>
       {/* Hero Section */}
-      <section className="relative">
-        <HeroSlider />
-        <div className="absolute inset-0 flex items-center justify-center flex-col text-center p-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4">
-            Welcome to Karan Mehndi Art
-          </h1>
-          <p className="text-xl md:text-2xl text-white drop-shadow-lg mb-8 font-cursive">
-            Timeless Henna, Crafted with Love
-          </p>
-          <BookingModal
-            trigger={
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-md transition-transform hover:scale-105"
-              >
-                Book Now
-              </Button>
-            }
-          />
+      <section className="relative w-full overflow-hidden">
+        <div className="container mx-auto px-4 py-12 sm:py-0">
+          <HeroSlider />
+          <div className="absolute inset-0 flex items-center justify-center flex-col text-center p-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4">
+              Welcome to Karan Mehndi Art
+            </h1>
+            <p className="text-xl md:text-2xl text-white drop-shadow-lg mb-8 font-cursive">
+              Timeless Henna, Crafted with Love
+            </p>
+            <BookingModal
+              trigger={
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-md transition-transform hover:scale-105"
+                >
+                  Book Now
+                </Button>
+              }
+            />
+          </div>
         </div>
       </section>
 
       {/* Introduction Section */}
-      <section className="py-16 bg-background">
-        <div className="container-custom">
+      <section className="w-full overflow-hidden bg-background">
+        <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="section-title">About Karan Mehndi Art</h2>
@@ -80,8 +88,8 @@ export default function Home() {
       </section>
 
       {/* Featured Designs Section */}
-      <section className="py-16 bg-muted">
-        <div className="container-custom">
+      <section className="w-full overflow-hidden bg-muted">
+        <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="text-center mb-12">
             <h2 className="section-title inline-block">Featured Designs</h2>
             <p className="mt-4 max-w-2xl mx-auto">
@@ -104,8 +112,8 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section className="py-16 bg-background">
-        <div className="container-custom">
+      <section className="w-full overflow-hidden bg-background">
+        <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="text-center mb-12">
             <h2 className="section-title inline-block">Our Services</h2>
             <p className="mt-4 max-w-2xl mx-auto">
@@ -184,8 +192,8 @@ export default function Home() {
       </section>
 
       {/* Testimonials Preview */}
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="container-custom">
+      <section className="w-full overflow-hidden bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
             <p className="max-w-2xl mx-auto">
@@ -275,8 +283,8 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-accent text-accent-foreground">
-        <div className="container-custom text-center">
+      <section className="w-full overflow-hidden bg-accent text-accent-foreground">
+        <div className="container mx-auto px-4 py-12 sm:py-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Book Your Mehendi Session?</h2>
           <p className="max-w-2xl mx-auto mb-8 text-lg">
             Contact us today to schedule your appointment and experience the artistry of Karan Mehndi Art.
@@ -297,7 +305,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   )
 }
-

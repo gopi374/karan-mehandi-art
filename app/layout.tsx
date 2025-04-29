@@ -1,10 +1,12 @@
 import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
-import { Playfair_Display, Dancing_Script } from "next/font/google"
+import { Playfair_Display } from "next/font/google"
+import { Dancing_Script } from "next/font/google"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "next-themes"
+import { cn } from "@/lib/utils"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -23,7 +25,24 @@ export const metadata: Metadata = {
   description:
     "Professional mehendi artist in Mumbai offering bridal, festive, and custom henna designs with natural ingredients and intricate patterns.",
   keywords: "mehandi, henna, bridal mehendi, henna artist, Mumbai, Karan Mehndi Art",
-    generator: 'v0.dev'
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        url: '/k.jpg',
+        type: 'image/jpg',
+        sizes: '32x32',
+      },
+      {
+        url: '/k.jpg',
+        type: 'image/jpg',
+      },
+    ],
+  },
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -32,12 +51,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${dancingScript.variable} font-sans bg-background`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <div className="flex min-h-screen flex-col">
+    <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
+      <body className={cn(
+        playfair.variable,
+        dancingScript.variable,
+        "relative min-h-screen w-screen max-w-[100vw] overflow-x-hidden bg-background font-sans antialiased"
+      )}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="relative flex min-h-screen w-full flex-col overflow-hidden">
             <Header />
-            <main className="flex-1">{children}</main>
+            {children}
             <Footer />
           </div>
         </ThemeProvider>
@@ -45,7 +73,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-
-import './globals.css'
